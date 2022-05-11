@@ -21,38 +21,48 @@ let stacks = {
   b: [],
   c: []
 };
+console.log(stacks.c)
 
-// Start here. What is this function doing?
 const printStacks = () => {
   console.log("a: " + stacks.a);
   console.log("b: " + stacks.b);
   console.log("c: " + stacks.c);
 }
 
-// Next, what do you think this function should do?
-const movePiece = () => {
-  // Your code here
+// movePiece should remove the last element in the array of the startStack and add it to the endStack //
 
-}
+const movePiece = (startStack, endStack) => {
+  stacks[endStack].push(stacks[startStack].pop());
+  checkForWin();
+};
 
-// Before you move, should you check if the move it actually allowed? Should 3 be able to be stacked on 2
-const isLegal = () => {
-  // Your code here
+// isLegal needs to check if the movePiece follows the rules of not allowing larger 
+const isLegal = (startStack, endStack) => {
+  if(stacks[startStack].length > 0) {
+    if(stacks[endStack].slice(-1) > stacks[startStack].slice(-1) || stacks[endStack].length === 0 ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+};
 
-}
-
-// What is a win in Towers of Hanoi? When should this function run?
 const checkForWin = () => {
-  // Your code here
+  if ((stacks.a.length == 0 && stacks.b.length == 4) || stacks.c.length == 4) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
-}
-
-// When is this function called? What should it do with its argument?
 const towersOfHanoi = (startStack, endStack) => {
-  // Your code here
-
-}
-
+  if (isLegal(startStack, endStack)) {
+    movePiece(startStack, endStack);
+  } else {
+    console.log("------ Invalid Move ------");
+  }
+};
+      
 const getPrompt = () => {
   printStacks();
   rl.question('start stack: ', (startStack) => {

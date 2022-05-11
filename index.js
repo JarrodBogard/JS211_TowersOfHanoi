@@ -7,25 +7,31 @@
 // * Why are you get a warning in your console? Fix it.
 // * Delete these comment lines!
 
-const stone = null
+let stone = null
 
 // this function is called when a row is clicked. 
 // Open your inspector tool to see what is being captured and can be used.
 const selectRow = (row) => {
   const currentRow = row.getAttribute("data-row")
   
+  console.log(stone, '----selected row----')
   console.log("Yay, we clicked an item", row)
   console.log("Here is the stone's id: ", row.id)
   console.log("Here is the stone's data-size: ", currentRow)
 
-  pickUpStone(row.id)
+  if(stone !== null) {
+    return dropStone(row.id)
+  } else if (!stone) {
+    pickUpStone(row.id)
+  }
 } 
 
 // this function can be called to get the last stone in the stack
 // but there might be something wrong with it...
 const pickUpStone = (rowID) => {
   const selectedRow = document.getElementById(rowID);
-  stone = selectedRow.removeChild(selectedRow.lastChild);
+  stone = selectedRow.lastElementChild
+  selectedRow.removeChild(selectedRow.lastElementChild);
   console.log(stone)
 }
 
@@ -33,9 +39,11 @@ const pickUpStone = (rowID) => {
 // Once you figure that out you'll need to figure out if its a legal move...
 // Something like: if(!stone){pickupStone} else{dropStone}
 
-const dropStone = (rowID, stone) => {
+const dropStone = (rowID) => {
+  console.log("----dropping stone----")
   document.getElementById(rowID).appendChild(stone)
   stone = null
+  console.log(stone, "----stone dropped----")
 }
 
 // * Remember you can use your logic from 'main.js' to maintain the rules of the game. But how? Follow the flow of data just like falling dominoes.
