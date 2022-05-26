@@ -20,7 +20,8 @@
 // topRow = []
 // middleRow = []
 // bottomRow = [largeStone, mediumStone, smallStone, extraSmallStone]
-
+const counter = document.getElementById("counter")
+let numberOfClicks = 0
 let stone = null
 
 // empty array to hold the value of the stone that was picked up
@@ -45,6 +46,7 @@ const selectRow = (row) => {
   
   if(stone !== null) {
     dropStone(row.id)
+    
     let rowTracker = row.childNodes
     console.log(rowTracker.length, "tracker")
     checkWin()
@@ -95,17 +97,17 @@ const dropStone = (rowID) => {
       console.log("illegal move")
       console.log("startStone: ", startStone, "endStone: ", endStone)
     }
-
+    numberOfClicks++
+    counter.innerText = numberOfClicks
 }
 
 const checkWin = () => {
   if(topRow.childNodes.length === 4 || middleRow.childNodes.length === 4) {
+    counter.innerText = `It took you ${numberOfClicks} moves to win!`
     console.log("you win!!!")
     setTimeout(function(){
       window.location.reload();
-   }, 5000);
-    // const reload = window.location.reload()
-    // myTimeout = setTimeout(reload, 5000)
+   }, 2500);
     return true
   }
 }
